@@ -14,12 +14,7 @@ const SKILLS = [
   { name: "C++", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
 ];
 
-interface SkillCategory {
-  title: string;
-  items: { name: string; level: number }[];
-}
-
-const SKILL_ROWS: SkillCategory[][] = [
+const SKILL_ROWS = [
   [
     {
       title: "Programming Languages",
