@@ -5,17 +5,21 @@ import { SkillsSection } from "@/components/portfolio/SkillsSection";
 import { CertificationsSection } from "@/components/portfolio/CertificationsSection";
 import { ContactSection } from "@/components/portfolio/ContactSection";
 import { Footer } from "@/components/portfolio/Footer";
+import SpaceBackground from "@/components/portfolio/SpaceBackground";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-      <HeroSection />
-      <AboutSection />
-      <SkillsSection />
-      <CertificationsSection />
-      <ContactSection />
-      <Footer />
+    <div className="min-h-screen relative">
+      <SpaceBackground />
+      <div className="relative z-10">
+        <Navbar />
+        <HeroSection />
+        <AboutSection />
+        <SkillsSection />
+        <CertificationsSection />
+        <ContactSection />
+        <Footer />
+      </div>
     </div>
   );
 };
