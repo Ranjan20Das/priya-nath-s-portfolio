@@ -14,6 +14,8 @@ const SKILLS = [
   { name: "C++", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
 ];
 
+const ROLE_TAGS = ["Creative Thinker", "Problem Solver", "Strategy Builder", "Quick Learner", "Teaching", "Dancer"];
+
 const SKILL_ROWS = [
   [
     {
@@ -60,7 +62,7 @@ const fadeUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" as const } },
 };
 
-const container = {
+const containerVariant = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
@@ -93,11 +95,30 @@ export const SkillsSection = () => {
           </p>
         </motion.div>
 
+        {/* Role tags */}
+        <motion.div
+          className="flex flex-wrap justify-center gap-3 mb-14"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          {ROLE_TAGS.map((r, i) => (
+            <motion.span
+              key={i}
+              className="px-5 py-2.5 rounded-full text-sm font-medium glass-card glow-border text-foreground"
+              variants={fadeUp}
+            >
+              {r}
+            </motion.span>
+          ))}
+        </motion.div>
+
         {/* Floating skill icons */}
         <motion.div
           ref={ref}
           className="flex flex-wrap justify-center gap-6 mb-16"
-          variants={container}
+          variants={containerVariant}
           initial="hidden"
           animate={controls}
         >

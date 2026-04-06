@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
 
 const container = {
   hidden: { opacity: 0 },
@@ -14,7 +13,25 @@ const item = {
 };
 
 const ROLES_TEXT = "Portfolio | Creative Professional";
-const ROLE_TAGS = ["Creative Thinker", "Problem Solver", "Strategy Builder", "Quick Learner", "Teaching", "Dancer"];
+
+const Star = ({ style }) => (
+  <div
+    className="absolute rounded-full bg-foreground"
+    style={style}
+  />
+);
+
+const ShootingStar = ({ delay }) => (
+  <div
+    className="absolute h-[1px] w-[80px] rotate-[-35deg]"
+    style={{
+      top: `${Math.random() * 50}%`,
+      left: `${Math.random() * 100}%`,
+      background: "linear-gradient(90deg, transparent, hsl(210, 100%, 55%), transparent)",
+      animation: `shootingStar 3s ${delay}s ease-in-out infinite`,
+    }}
+  />
+);
 
 export const HeroSection = () => {
   const [typed, setTyped] = useState("");
@@ -29,13 +46,33 @@ export const HeroSection = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const stars = useMemo(() =>
+    Array.from({ length: 120 }).map((_, i) => ({
+      width: Math.random() * 3 + 1,
+      height: Math.random() * 3 + 1,
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      opacity: Math.random() * 0.8 + 0.2,
+      animation: `twinkle ${2 + Math.random() * 4}s ${Math.random() * 3}s ease-in-out infinite alternate`,
+    })), []);
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      />
-      <div className="absolute inset-0 bg-background/70" />
+      {/* Space background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(220,30%,8%)_0%,_hsl(220,20%,2%)_70%,_hsl(0,0%,0%)_100%)]" />
+
+      {/* Stars */}
+      {stars.map((s, i) => <Star key={i} style={s} />)}
+
+      {/* Shooting stars */}
+      <ShootingStar delay={0} />
+      <ShootingStar delay={4} />
+      <ShootingStar delay={8} />
+
+      {/* Nebula glow effects */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-10 blur-[100px]" style={{ background: "hsl(210, 100%, 55%)" }} />
+      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full opacity-10 blur-[100px]" style={{ background: "hsl(270, 60%, 55%)" }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-5 blur-[120px]" style={{ background: "hsl(240, 80%, 50%)" }} />
 
       <motion.div
         className="relative z-10 section-container text-center py-24"
@@ -55,22 +92,9 @@ export const HeroSection = () => {
           <span className="animate-pulse">|</span>
         </motion.p>
 
-        <motion.p className="text-muted-foreground max-w-2xl mx-auto mb-8" variants={item}>
+        <motion.p className="text-muted-foreground max-w-2xl mx-auto mb-10" variants={item}>
           Passionate about learning and growth. Building a strong foundation for a successful career.
         </motion.p>
-
-        {/* Role tags */}
-        <motion.div className="flex flex-wrap justify-center gap-3 mb-10" variants={item}>
-          {ROLE_TAGS.map((r, i) => (
-            <motion.span
-              key={i}
-              className="px-4 py-2 rounded-full text-sm font-medium glass-card glow-border text-foreground"
-              variants={item}
-            >
-              {r}
-            </motion.span>
-          ))}
-        </motion.div>
 
         {/* Scroll arrow */}
         <motion.div
