@@ -10,7 +10,7 @@ const fadeUp = {
 export const ContactSection = () => {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     alert("Thank you for your message! I'll get back to you soon.");
     setForm({ name: "", email: "", subject: "", message: "" });

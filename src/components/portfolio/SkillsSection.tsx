@@ -66,7 +66,7 @@ const container = {
 };
 
 export const SkillsSection = () => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef(null);
   const controls = useAnimation();
   const isInView = useInView(ref, { once: true });
 
