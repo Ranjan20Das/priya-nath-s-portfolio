@@ -39,10 +39,9 @@ const Globe = () => {
 
   useFrame(({ clock }) => {
     if (meshRef.current) {
-      const mesh = meshRef.current;
-      /* @ts-ignore */
+      // @ts-ignore
       mesh.rotation.y = clock.getElapsedTime() * 0.3;
-      /* @ts-ignore */
+      // @ts-ignore
       mesh.rotation.x = Math.sin(clock.getElapsedTime() * 0.2) * 0.1;
     }
   });
