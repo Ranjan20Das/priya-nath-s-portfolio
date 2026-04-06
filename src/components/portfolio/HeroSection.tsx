@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, MapPin, Mail, Briefcase } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const container = {
@@ -14,7 +14,7 @@ const item = {
 };
 
 const ROLES_TEXT = "Portfolio | Creative Professional";
-const ROLE_TAGS = ["Creative Thinker", "Problem Solver", "Team Player", "Quick Learner"];
+const ROLE_TAGS = ["Creative Thinker", "Problem Solver", "Team Player", "Quick Learner", "Teaching"];
 
 export const HeroSection = () => {
   const [typed, setTyped] = useState("");
@@ -31,7 +31,6 @@ export const HeroSection = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${heroBg})` }}
@@ -70,25 +69,6 @@ export const HeroSection = () => {
             >
               {r}
             </motion.span>
-          ))}
-        </motion.div>
-
-        {/* Info cards */}
-        <motion.div className="flex flex-wrap justify-center gap-4 mb-10" variants={item}>
-          {[
-            { icon: MapPin, label: "📍 Location", value: "India" },
-            { icon: Briefcase, label: "💼 Focus", value: "Learning & Growth" },
-            { icon: Mail, label: "📞 Contact", value: "priyanath@email.com" },
-          ].map((info, i) => (
-            <motion.div
-              key={i}
-              className="glass-card glow-border px-5 py-3 text-left"
-              whileHover={{ scale: 1.05, y: -3 }}
-              variants={item}
-            >
-              <p className="text-xs text-muted-foreground">{info.label}</p>
-              <p className="text-sm font-semibold text-foreground">{info.value}</p>
-            </motion.div>
           ))}
         </motion.div>
 
