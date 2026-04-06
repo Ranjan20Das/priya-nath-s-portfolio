@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
+import heroTagsImg from "@/assets/hero-tags.png";
 
 const container = {
   hidden: { opacity: 0 },
@@ -47,9 +48,17 @@ export const HeroSection = () => {
           <span className="animate-pulse">|</span>
         </motion.p>
 
-        <motion.p className="text-muted-foreground max-w-2xl mx-auto mb-10" variants={item}>
+        <motion.p className="text-muted-foreground max-w-2xl mx-auto mb-8" variants={item}>
           Passionate about learning and growth. Building a strong foundation for a successful career.
         </motion.p>
+
+        <motion.div className="w-full max-w-3xl mx-auto mb-10" variants={item}>
+          <img
+            src={heroTagsImg}
+            alt="Creative Thinker, Problem Solver, Strategy Builder, Quick Learner, Teaching, Dancer"
+            className="w-full h-auto object-contain"
+          />
+        </motion.div>
 
         <motion.div
           className="text-muted-foreground"
