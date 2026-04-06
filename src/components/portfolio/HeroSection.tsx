@@ -14,7 +14,7 @@ const item = {
 };
 
 const ROLES_TEXT = "Portfolio | Creative Professional";
-const ROLE_TAGS = ["Creative Thinker", "Problem Solver", "Strategy Builder", "Quick Learner", "Teaching"];
+const ROLE_TAGS = ["Creative Thinker", "Problem Solver", "Strategy Builder", "Quick Learner", "Teaching", "Dancer"];
 
 export const HeroSection = () => {
   const [typed, setTyped] = useState("");
