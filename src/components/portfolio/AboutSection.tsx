@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Award } from "lucide-react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Sphere, MeshDistortMaterial, OrbitControls, Float } from "@react-three/drei";
+import * as THREE from "three";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 25 },
