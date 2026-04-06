@@ -1,5 +1,9 @@
+import { useRef, Suspense } from "react";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Award } from "lucide-react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Sphere, MeshDistortMaterial, OrbitControls, Float } from "@react-three/drei";
+import * as THREE from "three";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 25 },
@@ -30,6 +34,76 @@ const EDUCATION = [
   },
 ];
 
+const Globe = () => {
+  const meshRef = useRef(null);
+
+  useFrame(({ clock }) => {
+    if (meshRef.current) {
+      // @ts-ignore
+      mesh.rotation.y = clock.getElapsedTime() * 0.3;
+      // @ts-ignore
+      mesh.rotation.x = Math.sin(clock.getElapsedTime() * 0.2) * 0.1;
+    }
+  });
+
+  return (
+    <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.5}>
+      <group ref={meshRef}>
+        {/* Main globe sphere */}
+        <Sphere args={[1.8, 64, 64]}>
+          <MeshDistortMaterial
+            color="#3b82f6"
+            attach="material"
+            distort={0.15}
+            speed={2}
+            roughness={0.2}
+            metalness={0.8}
+            transparent
+            opacity={0.7}
+          />
+        </Sphere>
+
+        {/* Wireframe overlay */}
+        <Sphere args={[1.85, 32, 32]}>
+          <meshBasicMaterial
+            color="#8b5cf6"
+            wireframe
+            transparent
+            opacity={0.3}
+          />
+        </Sphere>
+
+        {/* Outer glow ring */}
+        <mesh rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[2.3, 0.02, 16, 100]} />
+          <meshBasicMaterial color="#3b82f6" transparent opacity={0.5} />
+        </mesh>
+
+        {/* Second ring */}
+        <mesh rotation={[Math.PI / 3, Math.PI / 4, 0]}>
+          <torusGeometry args={[2.5, 0.015, 16, 100]} />
+          <meshBasicMaterial color="#8b5cf6" transparent opacity={0.3} />
+        </mesh>
+
+        {/* Dots on surface */}
+        {Array.from({ length: 40 }).map((_, i) => {
+          const phi = Math.acos(-1 + (2 * i) / 40);
+          const theta = Math.sqrt(40 * Math.PI) * phi;
+          const x = 1.82 * Math.cos(theta) * Math.sin(phi);
+          const y = 1.82 * Math.sin(theta) * Math.sin(phi);
+          const z = 1.82 * Math.cos(phi);
+          return (
+            <mesh key={i} position={[x, y, z]}>
+              <sphereGeometry args={[0.03, 8, 8]} />
+              <meshBasicMaterial color="#60a5fa" />
+            </mesh>
+          );
+        })}
+      </group>
+    </Float>
+  );
+};
+
 export const AboutSection = () => {
   return (
     <section id="about" className="py-24">
@@ -51,40 +125,33 @@ export const AboutSection = () => {
           </p>
         </motion.div>
 
-        {/* About content */}
+        {/* 3D Globe */}
         <motion.div
-          className="glass-card p-8 mb-16"
+          className="glass-card p-4 mb-16 overflow-hidden"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-2xl font-bold mb-4 text-foreground">Who I Am</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                I'm Priya Nath, a motivated individual who believes in continuous learning and
-                self-improvement. I enjoy taking on new challenges and working collaboratively
-                with others.
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                I'm passionate about building my skills and preparing for a successful career.
-                My goal is to contribute positively to any team I'm a part of.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { label: "Name", value: "Priya Nath" },
-                { label: "Location", value: "India" },
-                { label: "Email", value: "priyanath@email.com" },
-                { label: "Languages", value: "English, Hindi" },
-              ].map((item, i) => (
-                <div key={i} className="glass-card p-4">
-                  <p className="text-xs text-muted-foreground mb-1">{item.label}</p>
-                  <p className="text-sm font-semibold text-foreground">{item.value}</p>
-                </div>
-              ))}
-            </div>
+          <div className="h-[350px] md:h-[400px] w-full">
+            <Suspense fallback={
+              <div className="h-full w-full flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+              </div>
+            }>
+              <Canvas camera={{ position: [0, 0, 5.5], fov: 45 }}>
+                <ambientLight intensity={0.4} />
+                <pointLight position={[10, 10, 10]} intensity={1} color="#3b82f6" />
+                <pointLight position={[-10, -10, -5]} intensity={0.5} color="#8b5cf6" />
+                <Globe />
+                <OrbitControls
+                  enableZoom={false}
+                  enablePan={false}
+                  autoRotate
+                  autoRotateSpeed={0.5}
+                />
+              </Canvas>
+            </Suspense>
           </div>
         </motion.div>
 
@@ -100,7 +167,6 @@ export const AboutSection = () => {
           </h3>
 
           <div className="relative">
-            {/* Timeline line */}
             <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-border hidden md:block" />
 
             <div className="space-y-8">
@@ -131,9 +197,7 @@ export const AboutSection = () => {
                       </div>
                     </div>
 
-                    {/* Center dot */}
                     <div className="hidden md:flex w-4 h-4 rounded-full bg-primary animate-pulse-glow flex-shrink-0" />
-
                     <div className="flex-1 hidden md:block" />
                   </motion.div>
                 );
