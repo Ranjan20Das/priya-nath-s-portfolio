@@ -35,7 +35,7 @@ const EDUCATION = [
 ];
 
 const Globe = () => {
-  const meshRef = useRef();
+  const meshRef = useRef(null);
 
   useFrame(({ clock }) => {
     const mesh = meshRef.current;
