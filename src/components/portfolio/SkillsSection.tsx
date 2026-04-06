@@ -57,7 +57,7 @@ const SKILL_ROWS = [
 
 const fadeUp = {
   hidden: { opacity: 0, y: 25 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" as const } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
 };
 
 const container = {
