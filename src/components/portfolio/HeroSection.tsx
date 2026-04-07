@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowDown, X } from "lucide-react";
 import heroTagsImg from "@/assets/hero-tags.png";
 import priyaPhoto from "@/assets/priya-photo.png";
 
