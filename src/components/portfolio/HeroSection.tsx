@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDown, X } from "lucide-react";
-import heroTagsImg from "@/assets/hero-tags.png";
+
 import priyaPhoto from "@/assets/priya-photo.png";
 
 const container = {
@@ -67,13 +67,6 @@ export const HeroSection = () => {
           Passionate about learning and growth. Building a strong foundation for a successful career.
         </motion.p>
 
-        <motion.div className="w-full max-w-3xl mx-auto mb-10" variants={item}>
-          <img
-            src={heroTagsImg}
-            alt="Creative Thinker, Problem Solver, Strategy Builder, Quick Learner, Teaching, Dancer"
-            className="w-full h-auto object-contain"
-          />
-        </motion.div>
 
         <motion.div
           className="text-muted-foreground"
