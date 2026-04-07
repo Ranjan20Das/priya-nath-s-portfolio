@@ -83,6 +83,34 @@ export const HeroSection = () => {
           <ArrowDown size={28} className="mx-auto" />
         </motion.div>
       </motion.div>
+
+      <AnimatePresence>
+        {showFull && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm cursor-pointer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowFull(false)}
+          >
+            <motion.img
+              src={priyaPhoto}
+              alt="Priya Nath - Full"
+              className="max-w-[90vw] max-h-[90vh] rounded-2xl object-contain shadow-[0_0_60px_rgba(139,92,246,0.4)]"
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.5, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            />
+            <button
+              className="absolute top-6 right-6 text-white/80 hover:text-white transition-colors"
+              onClick={() => setShowFull(false)}
+            >
+              <X size={32} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
