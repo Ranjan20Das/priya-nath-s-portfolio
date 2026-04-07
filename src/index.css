@@ -140,4 +140,21 @@
     15% { transform: translateX(300px) translateY(200px) rotate(-35deg); opacity: 0; }
     100% { opacity: 0; }
   }
+
+  @keyframes thunderBolt {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    20% { opacity: 0.3; }
+    30% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 0; }
+  }
+
+  @keyframes thunderFlash {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    20% { opacity: 0; }
+    30% { opacity: 0.5; }
+    100% { opacity: 0; }
+  }
 }
