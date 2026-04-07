@@ -18,6 +18,7 @@ const ROLES_TEXT = "Portfolio | Creative Professional";
 
 export const HeroSection = () => {
   const [typed, setTyped] = useState("");
+  const [showFull, setShowFull] = useState(false);
 
   useEffect(() => {
     let i = 0;
