@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
 
 const SpaceBackground = () => {
   const stars = useMemo(() =>
@@ -24,6 +24,38 @@ const SpaceBackground = () => {
       left: `${Math.random() * 80}%`,
       delay: i * 5,
     })), []);
+
+  const [bolts, setBolts] = useState([]);
+
+  const createBolt = useCallback(() => {
+    const id = Date.now() + Math.random();
+    const left = 10 + Math.random() * 80;
+    // Generate a jagged lightning path
+    const segments = 5 + Math.floor(Math.random() * 4);
+    let path = `M ${50} 0`;
+    let x = 50;
+    for (let i = 1; i <= segments; i++) {
+      x += (Math.random() - 0.5) * 40;
+      path += ` L ${Math.max(10, Math.min(90, x))} ${(i / segments) * 100}`;
+    }
+
+    setBolts(prev => [...prev, { id, left, path }]);
+    setTimeout(() => setBolts(prev => prev.filter(b => b.id !== id)), 600);
+  }, []);
+
+  useEffect(() => {
+    const firstTimeout = setTimeout(() => {
+      createBolt();
+      const interval = setInterval(createBolt, 3000);
+      return () => clearInterval(interval);
+    }, 3000);
+
+    const interval = setInterval(createBolt, 3000);
+    return () => {
+      clearTimeout(firstTimeout);
+      clearInterval(interval);
+    };
+  }, [createBolt]);
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
@@ -53,6 +85,43 @@ const SpaceBackground = () => {
             animation: `shootingStar 4s ${s.delay}s ease-in-out infinite`,
           }}
         />
+      ))}
+
+      {/* Thunder / Lightning bolts */}
+      {bolts.map(bolt => (
+        <div
+          key={bolt.id}
+          className="absolute top-0"
+          style={{ left: `${bolt.left}%`, width: "200px", height: "60vh" }}
+        >
+          {/* Screen flash */}
+          <div className="fixed inset-0 animate-[thunderFlash_0.6s_ease-out_forwards] bg-white/5 pointer-events-none" />
+          <svg
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            className="w-full h-full animate-[thunderBolt_0.6s_ease-out_forwards]"
+          >
+            <path
+              d={bolt.path}
+              fill="none"
+              stroke="hsla(210, 100%, 90%, 0.9)"
+              strokeWidth="1.5"
+              filter="url(#thunderGlow)"
+            />
+            <path
+              d={bolt.path}
+              fill="none"
+              stroke="hsla(220, 100%, 95%, 1)"
+              strokeWidth="0.5"
+            />
+            <defs>
+              <filter id="thunderGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+          </svg>
+        </div>
       ))}
     </div>
   );
