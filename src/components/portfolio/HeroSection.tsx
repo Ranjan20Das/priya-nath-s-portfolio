@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import heroTagsImg from "@/assets/hero-tags.png";
+import priyaPhoto from "@/assets/priya-photo.png";
 
 const container = {
   hidden: { opacity: 0 },
@@ -36,6 +37,16 @@ export const HeroSection = () => {
         initial="hidden"
         animate="visible"
       >
+        <motion.div className="mb-6" variants={item}>
+          <div className="w-40 h-40 md:w-52 md:h-52 lg:w-60 lg:h-60 mx-auto rounded-full overflow-hidden border-4 border-primary/50 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+            <img
+              src={priyaPhoto}
+              alt="Priya Nath"
+              className="w-full h-full object-cover object-top"
+            />
+          </div>
+        </motion.div>
+
         <motion.h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-4" variants={item}>
           Hi! I'm <br />
           <span className="gradient-text">PRIYA NATH</span>
