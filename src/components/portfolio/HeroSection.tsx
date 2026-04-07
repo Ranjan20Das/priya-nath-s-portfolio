@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowDown, X } from "lucide-react";
 import heroTagsImg from "@/assets/hero-tags.png";
 import priyaPhoto from "@/assets/priya-photo.png";
 
@@ -18,6 +18,7 @@ const ROLES_TEXT = "Portfolio | Creative Professional";
 
 export const HeroSection = () => {
   const [typed, setTyped] = useState("");
+  const [showFull, setShowFull] = useState(false);
 
   useEffect(() => {
     let i = 0;
@@ -38,7 +39,10 @@ export const HeroSection = () => {
         animate="visible"
       >
         <motion.div className="mb-6" variants={item}>
-          <div className="w-40 h-40 md:w-52 md:h-52 lg:w-60 lg:h-60 mx-auto rounded-full overflow-hidden border-4 border-primary/50 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+          <div
+            className="w-40 h-40 md:w-52 md:h-52 lg:w-60 lg:h-60 mx-auto rounded-full overflow-hidden border-4 border-primary/50 shadow-[0_0_30px_rgba(139,92,246,0.3)] cursor-pointer hover:shadow-[0_0_50px_rgba(139,92,246,0.5)] transition-shadow duration-300"
+            onClick={() => setShowFull(true)}
+          >
             <img
               src={priyaPhoto}
               alt="Priya Nath"
@@ -79,6 +83,34 @@ export const HeroSection = () => {
           <ArrowDown size={28} className="mx-auto" />
         </motion.div>
       </motion.div>
+
+      <AnimatePresence>
+        {showFull && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm cursor-pointer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowFull(false)}
+          >
+            <motion.img
+              src={priyaPhoto}
+              alt="Priya Nath - Full"
+              className="max-w-[90vw] max-h-[90vh] rounded-2xl object-contain shadow-[0_0_60px_rgba(139,92,246,0.4)]"
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.5, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            />
+            <button
+              className="absolute top-6 right-6 text-white/80 hover:text-white transition-colors"
+              onClick={() => setShowFull(false)}
+            >
+              <X size={32} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
