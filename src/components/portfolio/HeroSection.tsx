@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import heroTagsImg from "@/assets/hero-tags.png";
+import priyaPhoto from "@/assets/priya-photo.png";
 
 const container = {
   hidden: { opacity: 0 },
