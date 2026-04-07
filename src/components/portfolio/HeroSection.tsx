@@ -39,7 +39,10 @@ export const HeroSection = () => {
         animate="visible"
       >
         <motion.div className="mb-6" variants={item}>
-          <div className="w-40 h-40 md:w-52 md:h-52 lg:w-60 lg:h-60 mx-auto rounded-full overflow-hidden border-4 border-primary/50 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+          <div
+            className="w-40 h-40 md:w-52 md:h-52 lg:w-60 lg:h-60 mx-auto rounded-full overflow-hidden border-4 border-primary/50 shadow-[0_0_30px_rgba(139,92,246,0.3)] cursor-pointer hover:shadow-[0_0_50px_rgba(139,92,246,0.5)] transition-shadow duration-300"
+            onClick={() => setShowFull(true)}
+          >
             <img
               src={priyaPhoto}
               alt="Priya Nath"
